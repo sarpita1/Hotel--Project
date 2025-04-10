@@ -15,7 +15,7 @@ export default function SignIn() {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("User Data:", data);
+    //console.log("User Data:", data);
     router.push("/dashboard");
   };
 

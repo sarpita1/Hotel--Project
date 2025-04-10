@@ -60,7 +60,7 @@ export default function HotelBookingCheckout() {
     }
   
     const options = {
-      key: 'rzp_test_RiBCAMhSpkjzwZ', // Your Razorpay Key ID
+      key: process.env.paymentGatewayKey, // Your Razorpay Key ID
       amount: 2 * 100, // Amount is in paise (e.g., 1000 paise = ₹10)
       currency: 'INR',
       name: 'Hotel Booking',

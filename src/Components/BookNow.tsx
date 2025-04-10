@@ -16,7 +16,7 @@ const BookingCard = ({ checkIn, checkOut, guests, hotel,rooms }: any) => {
 
   const handleBooking = () => {
 
-    console.log("Selected hotel: booking",checkIn, checkOut, guests,rooms);
+    // console.log("Selected hotel: booking",checkIn, checkOut, guests,rooms);
     router.push({
       pathname: "/viewdetails",
       query: {

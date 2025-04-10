@@ -41,7 +41,7 @@ export default function View() {
       if (hotelParam) {
         // Parse the hotel object from the query string
         const parsedHotel = JSON.parse(hotelParam);
-        console.log("parsedHotel", parsedHotel);
+        //console.log("parsedHotel", parsedHotel);
         setHotel(parsedHotel);
       }
   
@@ -60,7 +60,7 @@ export default function View() {
     },
   ]; // <-- Ensure the array declaration ends properly
 
-console.log(hotel)
+//console.log(hotel)
   return (
     <>
       <Navbar />

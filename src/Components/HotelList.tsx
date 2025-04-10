@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useBooking } from "@/context/BookingContext";
+import Loader from "./Common/Loader";
 
 type Hotel = {
   name: string;
@@ -13,13 +14,31 @@ type Hotel = {
   city: string;
   amenities: string[];
   images: string[];
+  roomsAvailable: number;
 };
 
 export default function HotelList() {
   const router = useRouter();
-  const { city, checkIn, checkOut, guests,rooms } = useBooking();
+  const { city, checkIn, checkOut, guests, rooms } = useBooking();
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Helper function to determine the MIME type based on the base64 string
+  const getMimeType = (base64: any) => {
+    if (base64.startsWith("/9j/")) {
+      return "image/jpeg"; // JPEG
+    } else if (base64.startsWith("iVBORw0KGgo")) {
+      return "image/png"; // PNG
+    } else if (base64.startsWith("R0lGODlh")) {
+      return "image/gif"; // GIF
+    } else if (base64.startsWith("UklGRg")) {
+      return "image/webp"; // WebP
+    } else if (base64.startsWith("PHN2Zy")) {
+      return "image/svg+xml"; // SVG
+    } else {
+      return "image/jpeg"; // Default to JPEG if unknown
+    }
+  };
 
   useEffect(() => {
     if (city) {
@@ -42,7 +61,7 @@ export default function HotelList() {
   }, [city]);
 
   const handleRoomSelection = (hotel: Hotel) => {
-    console.log("Selected hotel: booking",checkIn, checkOut, guests,rooms);
+    //console.log("Selected hotel: booking", checkIn, checkOut, guests, rooms);
     router.push({
       pathname: "/view",
       query: {
@@ -50,13 +69,13 @@ export default function HotelList() {
         checkIn,
         checkOut,
         guests,
-        rooms
+        rooms,
       },
     });
   };
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
+    return <Loader />;
   }
   return (
     <div className="bg-gray-100 min-h-screen p-4">
@@ -71,8 +90,11 @@ export default function HotelList() {
               className="bg-white shadow-lg p-4 rounded-lg flex flex-col sm:flex-row gap-4"
             >
               <div className="w-full sm:w-48">
+                {/* Dynamically determine the MIME type based on the image data */}
                 <Image
-                  src="/images/room1.jpg"
+                  src={`data:${getMimeType(hotel.images[0])};base64,${
+                    hotel.images[0]
+                  }`} // Use the correct MIME type
                   alt={hotel.name}
                   width={200}
                   height={150}
@@ -103,16 +125,25 @@ export default function HotelList() {
                 </div>
                 <button
                   className="mt-3 bg-orange-500 text-white px-4 py-2 rounded-md w-full sm:w-auto mr-2"
-                  onClick={() => handleRoomSelection(hotel)}// Pass the hotel object
+                  onClick={() => handleRoomSelection(hotel)} // Pass the hotel object
                 >
                   View Details
                 </button>
 
                 <button
-                  className="mt-3 bg-green-500 text-white px-4 py-2 rounded-md w-full sm:w-auto "
-                  onClick={() => handleRoomSelection(hotel)} // Pass the hotel object
+                  className={`mt-3 px-4 py-2 rounded-md w-full sm:w-auto ${
+                    hotel?.roomsAvailable > 0
+                      ? "bg-green-500 hover:bg-green-600" // Green for available rooms
+                      : "bg-gray-400 cursor-not-allowed" // Gray for no rooms
+                  } text-white`}
+                  onClick={() =>
+                    hotel?.roomsAvailable > 0 && handleRoomSelection(hotel)
+                  } // Only allow click if rooms are available
+                  disabled={hotel?.roomsAvailable <= 0} // Disable button if no rooms are available
                 >
-                  Book Room
+                  {hotel?.roomsAvailable > 0
+                    ? "Book Room"
+                    : "Rooms Not Available"}
                 </button>
               </div>
             </div>

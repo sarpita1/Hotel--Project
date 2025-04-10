@@ -4,38 +4,39 @@ import Footer from "@/Components/Footer";
 import Image from "next/image";
 
 export default function ListProperty() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     name: "",
     city: "",
     address: "",
     description: "",
     pricePerNight: "",
+    roomsAvailable:"",
     amenities: [],
-    images: null, // Store image file
+    images: [], // Store multiple image files
   });
 
-  const [preview, setPreview] = useState(""); // Image preview URL
-  const [uploadedImage, setUploadedImage] = useState(""); // Store uploaded image URL
+  const [previews, setPreviews] = useState(['']); // Store preview URLs for multiple images
+  const [uploadedImages, setUploadedImages] = useState([]); // Store uploaded image URLs
 
   const handleChange = (e:any) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev:any) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e:any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreview(imageUrl);
-      setFormData((prev) => ({ ...prev, images: file }));
+    const files = Array.from(e.target.files); // Convert FileList to an array
+    if (files.length > 0) {
+      const previewUrls = files.map((file:any) => URL.createObjectURL(file)); // Create preview URLs
+      setPreviews(previewUrls);
+      setFormData((prev:any) => ({ ...prev, images: files })); // Store files in state
     }
   };
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
-    if (!formData.images) {
-      alert("Please upload an image");
+    if (formData.images.length === 0) {
+      alert("Please upload at least one image");
       return;
     }
 
@@ -45,11 +46,16 @@ export default function ListProperty() {
     formDataToSend.append("address", formData.address);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("pricePerNight", formData.pricePerNight);
+    formDataToSend.append("roomsAvailable", formData.roomsAvailable);
+    
     formDataToSend.append("amenities", JSON.stringify(formData.amenities));
-    formDataToSend.append("images", formData.images);
+
+    // Append each image file to FormData
+    formData.images.forEach((image:any, index:any) => {
+      formDataToSend.append(`images`, image); // Use `images` as the key
+    });
 
     try {
-      console.log("Form Data:", formDataToSend);
       const response = await fetch("/api/hotels/add-hotel", {
         method: "POST",
         body: formDataToSend,
@@ -63,10 +69,11 @@ export default function ListProperty() {
           address: "",
           description: "",
           pricePerNight: "",
+          roomsAvailable:"",
           amenities: [],
-          images: null,
+          images: [],
         });
-        setPreview("");
+        setPreviews([]);
       } else {
         alert("Failed to list property");
       }
@@ -141,28 +148,41 @@ export default function ListProperty() {
             className="w-full p-2 border rounded"
             required
           />
+          <input
+            type="number"
+            name="roomsAvailable"
+            placeholder="Rooms available"
+            value={formData.roomsAvailable}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+            required
+          />
 
           {/* Image Upload */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
-              Upload Property Image
+              Upload Property Images
             </label>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageChange}
               className="w-full p-2 border rounded"
+              multiple // Allow multiple file selection
               required
             />
-            {preview && (
-              <Image
-                src={preview}
-                alt="Preview"
-                width={500}
-                height={300}
-                className="mt-3 w-full h-48 object-cover rounded-md shadow"
-              />
-            )}
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {previews.map((preview, index) => (
+                <Image
+                  key={index}
+                  src={preview}
+                  alt={`Preview ${index}`}
+                  width={150}
+                  height={100}
+                  className="w-full h-24 object-cover rounded-md shadow"
+                />
+              ))}
+            </div>
           </div>
 
           <button
@@ -173,18 +193,22 @@ export default function ListProperty() {
           </button>
         </form>
 
-        {/* Display Uploaded Image */}
-        {uploadedImage && (
+        {/* Display Uploaded Images */}
+        {uploadedImages.length > 0 && (
           <div className="mt-6 p-4 bg-gray-100 rounded-md shadow">
-            <h3 className="text-lg font-semibold">Uploaded Property Image:</h3>
-
-            <Image
-              src={uploadedImage}
-              alt="Uploaded Property"
-              width={500}
-              height={300}
-              className="mt-3 w-full h-48 object-cover rounded-md shadow"
-            />
+            <h3 className="text-lg font-semibold">Uploaded Property Images:</h3>
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {uploadedImages.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={`Uploaded Property ${index}`}
+                  width={150}
+                  height={100}
+                  className="w-full h-24 object-cover rounded-md shadow"
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>

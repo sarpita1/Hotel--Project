@@ -35,7 +35,7 @@ export default function ViewDetailsPage() {
     setRooms(roomsParam);
   }, [searchParams]);
 
-  console.log("first", hotel, checkIn, checkOut, guests, rooms);
+  //console.log("first", hotel, checkIn, checkOut, guests, rooms);
 
   const formattedCheckIn = format(new Date(checkIn ?? "2023-12-31"), "EEE, MMM d, yyyy");
     const formattedCheckOut = format(new Date(checkOut ?? "2024-01-07"), "EEE, MMM d, yyyy");

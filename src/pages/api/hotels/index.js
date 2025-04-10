@@ -9,17 +9,17 @@ export default async function handler(req, res) {
   city = city.toLowerCase(); // Convert the query parameter to lowercase for consistency
 
   // Debugging: Log the query parameter
-  console.log('Query Parameter - City:', city);
+  //console.log('Query Parameter - City:', city);
 
   try {
     // Debugging: Log MongoDB connection attempt
-    console.log('Attempting to connect to MongoDB...');
+    //console.log('Attempting to connect to MongoDB...');
 
     const { db } = await connectToDatabase(); // Ensure the database name is correct
-    const hotelsCollection = db.collection('hotels');
+    const hotelsCollection = db.collection('properties');
 
     // Debugging: Log the query being executed
-    console.log('Querying hotels for city (case-insensitive):', city);
+    //console.log('Querying hotels for city (case-insensitive):', city);
 
     // Use a regex to perform a case-insensitive search
     const hotels = await hotelsCollection
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       .toArray();
 
     // Debugging: Log the result
-    console.log('Hotels found:', hotels);
+    //console.log('Hotels found:', hotels);
 
     res.status(200).json(hotels);
   } catch (error) {

@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <div className='flex flex-col items-center md:items-start space-y-4 md:space-x-4 py-6'>
           <h1 className='font-extrabold text-2xl text-center md:text-left'>Join our network and grow your business!</h1>
-          <Link href="/list-property">
+          <Link href="/add-hotel">
             <button className="bg-white flex items-center py-3 px-6 rounded-lg text-black shadow-md">
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 mr-2">

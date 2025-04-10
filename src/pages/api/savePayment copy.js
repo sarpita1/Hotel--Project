@@ -1,3 +1,4 @@
+// pages/api/savePayment.js
 import { connectToDatabase } from '@/lib/mongodb'; // Adjust this import based on your DB setup
 
 export default async function handler(req, res) {
@@ -12,7 +13,7 @@ export default async function handler(req, res) {
       const { db } = await connectToDatabase();
 
       // Save payment details to the database
-      const paymentResult = await db.collection('payments').insertOne({
+      const result = await db.collection('payments').insertOne({
         hotel,
         checkIn,
         checkOut,
@@ -27,21 +28,10 @@ export default async function handler(req, res) {
         createdAt: new Date(),
       });
 
-      // Decrease the number of roomsAvailable in the properties collection
-      const propertyCollection = db.collection('properties');
-      const propertyUpdateResult = await propertyCollection.updateOne(
-        { _id: hotel._id }, // Match the property by its _id
-        { $inc: { roomsAvailable: -rooms } } // Decrease roomsAvailable by the number of rooms booked
-      );
-
-      if (propertyUpdateResult.modifiedCount === 0) {
-        throw new Error('Failed to update roomsAvailable in the properties collection');
-      }
-
-      res.status(200).json({ message: 'Payment details saved successfully', paymentResult });
+      res.status(200).json({ message: 'Payment details saved successfully', result });
     } catch (error) {
       console.error('Error saving payment details:', error);
-      res.status(500).json({ message: 'Failed to save payment details', error: error.message });
+      res.status(500).json({ message: 'Failed to save payment details' });
     }
   } else {
     res.status(405).json({ message: 'Method not allowed' });
