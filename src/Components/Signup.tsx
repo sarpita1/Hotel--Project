@@ -1,21 +1,35 @@
 import { useState } from 'react';
 
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+interface Errors {
+  name: string;
+  email: string;
+  password: string;
+  terms: string;
+}
+
 const CreateAccountForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     password: '',
     rememberMe: false,
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<Errors>({
     name: '',
     email: '',
     password: '',
     terms: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
@@ -23,8 +37,8 @@ const CreateAccountForm = () => {
     });
   };
 
-  const validateForm = () => {
-    const newErrors = {};
+  const validateForm = (): boolean => {
+    const newErrors: Errors = { name: '', email: '', password: '', terms: '' };
     let isValid = true;
 
     if (!formData.name.trim()) {
@@ -52,7 +66,7 @@ const CreateAccountForm = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       alert('Form submitted successfully!');

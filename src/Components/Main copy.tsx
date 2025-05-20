@@ -15,6 +15,8 @@ export default function Main() {
 
   return (
     <>
+    
+
       <div className="hero relative">
         <div className="relative w-full h-64 md:h-96 flex items-center justify-center">
           <Image
@@ -31,6 +33,9 @@ export default function Main() {
           <h1 className="text-black text-2xl md:text-4xl font-bold text-center">
             Over 100+ hotels and homes across 5+ countries
           </h1>
+
+          {/* <div className="bg-red-500 text-white p-4">Test Tailwind</div> */}
+
           <div className="flex justify-center mt-6">
             <div className="grid grid-cols-1 md:grid-cols-7 w-full">
               <input
@@ -63,15 +68,15 @@ export default function Main() {
                 className="col-span-1 p-3 border"
                 placeholder="Guests"
                 value={guests}
-                onChange={(e) => setGuests(e.target.value)}
+                onChange={(e) => setGuests(Number(e.target.value))}
               />
 
-<input
+              <input
                 type="number"
                 className="col-span-1 p-3 border"
                 placeholder="Rooms"
                 value={rooms}
-                onChange={(e) => setRooms(e.target.value)}
+                onChange={(e) => setRooms(Number(e.target.value))}
               />
               <button
                 className="col-span-1 bg-green-500 text-white p-3 hover:bg-green-600 transition"
@@ -89,7 +94,7 @@ export default function Main() {
         <Image
           src="/images/banner2.jpg"
           alt="banner2"
-          width={1300}
+          width={700}
           height={700}
           className="rounded-md shadow-lg"
         />
@@ -110,7 +115,7 @@ export default function Main() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 p-6 md:p-20 bg-gray-100 shadow-lg">
-        <img
+        <Image
           src="/images/banner2.jpg"
           width={700}
           height={500}
@@ -120,7 +125,7 @@ export default function Main() {
         />
         <div className="text-center md:text-left">
           <h1 className="text-2xl md:text-3xl font-bold">
-            There's an Glitz Hotels around. Always.
+            There&apos;s an Glitz Hotels around. Always.
           </h1>
           <p className="text-gray-500 mt-4">
             More Destinations. More Ease. More Affordable.

@@ -8,7 +8,7 @@ export default function Navbar() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const router = useRouter();
 
-    const handleNavigation = (path:any) => {
+    const handleNavigation = (path: string) => {
         router.push(path);
     };
 
@@ -26,7 +26,7 @@ export default function Navbar() {
                     <MenuItem icon={"🏠"} title="List Your Property" subtitle="Start earning in 30 mins" />
                     <MenuItem icon={"💼"} title="OYO for Business" subtitle="Trusted by 5000 Corporates" />
                     <MenuItem icon={"📞"} title="011-4000612" subtitle="Call us to book now" />
-                    <MenuItem icon={"🌍"} title="English" dropdown />
+                    <MenuItem icon={"🌍"} title="English" dropdown={true} />
                     <div className="relative">
                         <button 
                             className="font-bold px-4 py-2 border-none hover:bg-gray-200"
@@ -80,7 +80,7 @@ export default function Navbar() {
                     <MenuItem icon={"🏠"} title="List Your Property" subtitle="Start earning in 30 mins" />
                     <MenuItem icon={"💼"} title="OYO for Business" subtitle="Trusted by 5000 Corporates" />
                     <MenuItem icon={"📞"} title="011-4000612" subtitle="Call us to book now" />
-                    <MenuItem icon={"🌍"} title="English" dropdown />
+                    <MenuItem icon={"🌍"} title="English" dropdown={true} />
                     <div className="flex flex-col space-y-3">
                         <button 
                             className="font-bold px-4 py-2 border rounded-lg hover:bg-gray-200"
@@ -101,7 +101,7 @@ export default function Navbar() {
     );
 }
 
-const MenuItem = ({ icon, title, subtitle, dropdown }) => (
+const MenuItem = ({ icon, title, subtitle, dropdown }: { icon: string; title: string; subtitle?: string; dropdown?: boolean }) => (
     <div className="flex items-center space-x-2">
         <span className="text-xl">{icon}</span>
         <div>

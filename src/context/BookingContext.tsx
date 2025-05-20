@@ -20,7 +20,7 @@ export const BookingProvider = ({ children }: { children: React.ReactNode }) => 
   const [city, setCity] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState<any>('');
+  const [guests, setGuests] = useState<any>("");
   const [rooms, setRooms] = useState<any>('');
   
 

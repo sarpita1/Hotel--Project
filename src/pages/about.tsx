@@ -14,7 +14,7 @@ export default function AboutUs() {
             About Us
           </h1>
           <p className="text-gray-600 text-center text-base sm:text-lg md:text-xl mb-6">
-            Welcome to <span className="font-semibold">StayEase</span>, your trusted partner in finding the perfect stay. Whether you're looking for luxury, budget-friendly, or boutique hotels, we've got you covered.
+            Welcome to <span className="font-semibold">StayEase</span>, your trusted partner in finding the perfect stay. Whether you&apos;re looking for luxury, budget-friendly, or boutique hotels, we&apos;ve got you covered.
           </p>
           
           <h2 className="text-2xl sm:text-3xl font-semibold text-gray-700 mt-6 mb-2">Our Mission</h2>

@@ -193,7 +193,7 @@ export default function Main() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 p-6 md:p-20 bg-gray-100 shadow-lg">
-        <img
+        <Image
           src="/images/banner2.jpg"
           width={700}
           height={500}
@@ -203,7 +203,7 @@ export default function Main() {
         />
         <div className="text-center md:text-left">
           <h1 className="text-2xl md:text-3xl font-bold">
-            There's an Glitz Hotels around. Always.
+            There&apos;s an Glitz Hotels around. Always.
           </h1>
           <p className="text-gray-500 mt-4">
             More Destinations. More Ease. More Affordable.
