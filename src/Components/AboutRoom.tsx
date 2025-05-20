@@ -42,7 +42,7 @@ export default function HotelCard({hotel}:any) {
       <div className="flex flex-wrap justify-center sm:justify-start gap-4 mt-2 text-gray-600 text-sm">
         {hotel?.amenities?.map((amenity:any, idx:any) => (
         // <div className="flex items-center gap-1 line-through">{amenity}</div>
-        <div className="flex items-center gap-1">{amenity}</div>
+        <div className="flex items-center gap-1" key={amenity.id}>{amenity}</div>
         // <div className="flex items-center gap-1">TV</div>
         ))}
       </div>
